@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		99C16F8D2E7FAA2300D75198 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 99C16F8C2E7FAA2300D75198 /* FirebaseAnalytics */; };
+		99C16F902E7FB22100D75198 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 99C16F8F2E7FB22100D75198 /* FirebaseAuth */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				99C16F8D2E7FAA2300D75198 /* FirebaseAnalytics in Frameworks */,
+				99C16F902E7FB22100D75198 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -38,6 +40,7 @@
 			isa = PBXGroup;
 			children = (
 				99C16F7D2E7FA68A00D75198 /* SwiftfulFirebase */,
+				99C16F8E2E7FB22100D75198 /* Frameworks */,
 				99C16F7C2E7FA68A00D75198 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -48,6 +51,13 @@
 				99C16F7B2E7FA68A00D75198 /* SwiftfulFirebase.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		99C16F8E2E7FB22100D75198 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,6 +81,7 @@
 			name = SwiftfulFirebase;
 			packageProductDependencies = (
 				99C16F8C2E7FAA2300D75198 /* FirebaseAnalytics */,
+				99C16F8F2E7FB22100D75198 /* FirebaseAuth */,
 			);
 			productName = SwiftfulFirebase;
 			productReference = 99C16F7B2E7FA68A00D75198 /* SwiftfulFirebase.app */;
@@ -358,6 +369,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 99C16F8B2E7FAA2300D75198 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalytics;
+		};
+		99C16F8F2E7FB22100D75198 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 99C16F8B2E7FAA2300D75198 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
