@@ -10,6 +10,12 @@ import Combine
 
 @MainActor
 final class SettingsViewModel: ObservableObject {
+    @Published var authProviders: [AuthProviderOption] = []
+    
+    func loadAuthProviders() throws {
+        try authProviders = AuthenticationManager.shared.getProviders()
+    }
+    
     func signOut() throws {
         try AuthenticationManager.shared.signOut()
     }
@@ -45,12 +51,22 @@ struct SettingsView: View {
                         try viewModel.signOut()
                         showSignInView = true
                     } catch {
-                        print(error)
+                        print("LO ERROR: \(error)")
                     }
                 }
             }
             
-            emailFunctions
+            if viewModel.authProviders.contains(.email) {
+                emailFunctions
+            }
+        }
+        .onAppear {
+            do {
+                try viewModel.loadAuthProviders()
+            } catch {
+                print("AP ERROR: \(error)")
+            }
+            
         }
         .navigationTitle("Settings")
     }
@@ -71,7 +87,7 @@ extension SettingsView {
                         try await viewModel.resetPassword()
                         print("Password Reset Sent")
                     } catch {
-                        print(error)
+                        print("RP ERROR: \(error)")
                     }
                 }
             }
@@ -82,7 +98,7 @@ extension SettingsView {
                         try await viewModel.updateEmail()
                         print("Email Updated")
                     } catch {
-                        print(error)
+                        print("UE ERROR: \(error)")
                     }
                 }
             }
@@ -93,7 +109,7 @@ extension SettingsView {
                         try await viewModel.updatePassword()
                         print("Password Updated")
                     } catch {
-                        print(error)
+                        print("UP ERROR: \(error)")
                     }
                 }
             }
