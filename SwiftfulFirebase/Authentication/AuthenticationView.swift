@@ -8,14 +8,26 @@
 import SwiftUI
 import GoogleSignIn
 import GoogleSignInSwift
+import AuthenticationServices
 import Combine
+import CryptoKit
+
+
 
 @MainActor
 final class AuthenticationViewModel: ObservableObject {
+    let appleHelper = SignInAppleHelper()
+    
     func signInWithGoogle() async throws {
         let helper = SignInGoogleHelper()
         let tokens = try await helper.signIn()
         try await AuthenticationManager.shared.SignInWithGoogle(tokens: tokens)
+    }
+    
+    func signInWithApple() async throws {
+        let helper = SignInAppleHelper()
+        let tokens = try await helper.startSignInWithAppleFlow()
+        try await AuthenticationManager.shared.SignInWithApple(tokens: tokens)
     }
 }
 
@@ -47,6 +59,22 @@ struct AuthenticationView: View {
                     }
                 }
             }
+            
+            Button {
+                Task {
+                    do {
+                        try await viewModel.signInWithApple()
+//                        showSignInView = false
+                    } catch {
+                        print(error)
+                    }
+                }
+            } label: {
+                signInWithAppleButtonViewRepresentable(type: .default, style: .black)
+                    .allowsHitTesting(false)
+            }
+            .frame(height: 55)
+            
             
             Spacer()
         }
