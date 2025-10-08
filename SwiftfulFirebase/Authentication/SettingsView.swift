@@ -91,11 +91,11 @@ struct SettingsView: View {
                         try await viewModel.deleteAccount()
                         showSignInView = true
                     } catch {
-                        print("LO ERROR: \(error)")
+                        print("DA ERROR: \(error)")
                     }
                 }
             } label: {
-                Text("DELETE ACOUNT")
+                Text("DELETE ACCOUNT")
             }
             
             if viewModel.authProviders.contains(.email) {
