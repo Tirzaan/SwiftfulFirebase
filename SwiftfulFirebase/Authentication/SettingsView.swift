@@ -11,9 +11,16 @@ import Combine
 @MainActor
 final class SettingsViewModel: ObservableObject {
     @Published var authProviders: [AuthProviderOption] = []
+    @Published var authUser: AuthDataResultModel? = nil
+
+    func loadAuthProviders() {
+        if let providers = try? AuthenticationManager.shared.getProviders() {
+            authProviders = providers
+        }
+    }
     
-    func loadAuthProviders() throws {
-        try authProviders = AuthenticationManager.shared.getProviders()
+    func loadAuthUser() {
+        self.authUser = try? AuthenticationManager.shared.getAuthenticatedUser()
     }
     
     func signOut() throws {
@@ -37,6 +44,24 @@ final class SettingsViewModel: ObservableObject {
         let newPassword = "Hello123!"
         try await AuthenticationManager.shared.updatePassword(newPassword: newPassword)
     }
+    
+    func linkGoogleAcount() async throws {
+        let helper = SignInGoogleHelper()
+        let tokens = try await helper.signIn()
+        self.authUser = try await AuthenticationManager.shared.linkGoogle(tokens: tokens)
+    }
+    
+    func linkAppleAcount() async throws {
+        let helper = SignInAppleHelper()
+        let tokens = try await helper.startSignInWithAppleFlow()
+        self.authUser = try await AuthenticationManager.shared.linkApple(tokens: tokens)
+    }
+    
+    func linkEmailAcount() async throws {
+        let email = "hello123@gmail.com"
+        let password = "Hello123!"
+        self.authUser = try await AuthenticationManager.shared.linkEmail(email: email, password: password)
+    }
 }
 
 struct SettingsView: View {
@@ -59,14 +84,14 @@ struct SettingsView: View {
             if viewModel.authProviders.contains(.email) {
                 emailFunctions
             }
+            
+            if viewModel.authUser?.isAnonymous == true {
+                AnonymousFunctions
+            }
         }
         .onAppear {
-            do {
-                try viewModel.loadAuthProviders()
-            } catch {
-                print("AP ERROR: \(error)")
-            }
-            
+            viewModel.loadAuthProviders()
+            viewModel.loadAuthUser()
         }
         .navigationTitle("Settings")
     }
@@ -115,6 +140,45 @@ extension SettingsView {
             }
         } header: {
             Text("Email Functions")
+        }
+    }
+    
+    private var AnonymousFunctions: some View {
+        Section {
+            Button("Link Google Acount") {
+                Task {
+                    do {
+                        try await viewModel.linkGoogleAcount()
+                        print("Linked Google Acount")
+                    } catch {
+                        print("LGA ERROR: \(error)")
+                    }
+                }
+            }
+            
+            Button("Link Apple Acount") {
+                Task {
+                    do {
+                        try await viewModel.linkAppleAcount()
+                        print("Linked Apple Acount")
+                    } catch {
+                        print("LAA ERROR: \(error)")
+                    }
+                }
+            }
+            
+            Button("Link Email Acount") {
+                Task {
+                    do {
+                        try await viewModel.linkEmailAcount()
+                        print("Linked Email Acount")
+                    } catch {
+                        print("LEA ERROR: \(error)")
+                    }
+                }
+            }
+        } header: {
+            Text("create Acount")
         }
     }
 }
