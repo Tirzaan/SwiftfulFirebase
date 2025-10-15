@@ -107,6 +107,12 @@ final class UserManager {
     static let shared = UserManager()
     private init() { }
     
+    private let userCollection = Firestore.firestore().collection("users")
+    
+    private func userDocument(userId: String) -> DocumentReference {
+        userCollection.document(userId)
+    }
+    
     private let encoder: Firestore.Encoder = {
         let encoder = Firestore.Encoder()
 //        encoder.keyEncodingStrategy = .convertToSnakeCase
@@ -118,12 +124,6 @@ final class UserManager {
 //        decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
     }()
-    
-    private let userCollection = Firestore.firestore().collection("users")
-    
-    private func userDocument(userId: String) -> DocumentReference {
-        userCollection.document(userId)
-    }
     
     func createNewUser(user: databaseUser) async throws {
         try userDocument(userId: user.userId).setData(from: user, merge: false)
