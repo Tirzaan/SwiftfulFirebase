@@ -8,6 +8,7 @@
 import Foundation
 import Firebase
 import FirebaseFirestore
+import Combine
 
 final class ProductsManager {
     static let shared = ProductsManager()
@@ -139,5 +140,19 @@ extension Query {
     func aggregationCount() async throws -> Int {
         let snapshot = try await self.count.getAggregation(source: .server)
         return Int(truncating: snapshot.count)
+    }
+    
+    func addSnapshotListener<T>(as type: T.Type) -> (AnyPublisher<[T], Error>, ListenerRegistration) where T : Decodable {
+        let publisher = PassthroughSubject<[T], Error>()
+        let listener = self.addSnapshotListener { querySnapshot, error in
+            guard let documents = querySnapshot?.documents else {
+                print("No Documents")
+                return
+            }
+            
+            let products: [T] = documents.compactMap({ try? $0.data(as: T.self) })
+            publisher.send(products)
+        }
+        return (publisher.eraseToAnyPublisher(), listener)
     }
 }
