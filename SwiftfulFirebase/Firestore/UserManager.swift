@@ -25,6 +25,8 @@ struct databaseUser: Codable {
     let isPremium: Bool?
     let preferences: [String]?
     let favoriteMovie: Movie?
+    let profileImagePath: String?
+    let profileImageUrl: String?
     
     init(auth: AuthDataResultModel) {
         self.userId = auth.uid
@@ -35,9 +37,11 @@ struct databaseUser: Codable {
         self.isPremium = false
         self.preferences = nil
         self.favoriteMovie = nil
+        self.profileImagePath = nil
+        self.profileImageUrl = nil
     }
     
-    init(userId: String, isAnonymous: Bool? = nil, email: String? = nil, photoUrl: String? = nil, dateCreated: Date? = nil, isPremium: Bool? = nil, preferences: [String]? = nil, favoriteMovie: Movie? = nil) {
+    init(userId: String, isAnonymous: Bool? = nil, email: String? = nil, photoUrl: String? = nil, dateCreated: Date? = nil, isPremium: Bool? = nil, preferences: [String]? = nil, favoriteMovie: Movie? = nil, profileImagePath: String? = nil, profileImageUrl: String? = nil) {
         self.userId = userId
         self.isAnonymous = isAnonymous
         self.email = email
@@ -46,6 +50,8 @@ struct databaseUser: Codable {
         self.isPremium = isPremium
         self.preferences = preferences
         self.favoriteMovie = favoriteMovie
+        self.profileImagePath = profileImagePath
+        self.profileImageUrl = profileImageUrl
     }
     
     enum CodingKeys: String, CodingKey {
@@ -57,6 +63,8 @@ struct databaseUser: Codable {
         case isPremium = "user_ispremium"
         case preferences = "preferences"
         case favoriteMovie = "favorite_movie"
+        case profileImagePath = "profile_image_path"
+        case profileImageUrl = "profile_image_url"
     }
     
     init(from decoder: any Decoder) throws {
@@ -69,6 +77,8 @@ struct databaseUser: Codable {
         self.isPremium = try container.decodeIfPresent(Bool.self, forKey: .isPremium)
         self.preferences = try container.decodeIfPresent([String].self, forKey: .preferences)
         self.favoriteMovie = try container.decodeIfPresent(Movie.self, forKey: .favoriteMovie)
+        self.profileImagePath = try container.decodeIfPresent(String.self, forKey: .profileImagePath)
+        self.profileImageUrl = try container.decodeIfPresent(String.self, forKey: .profileImageUrl)
     }
     
     func encode(to encoder: any Encoder) throws {
@@ -81,6 +91,8 @@ struct databaseUser: Codable {
         try container.encodeIfPresent(self.isPremium, forKey: .isPremium)
         try container.encodeIfPresent(self.preferences, forKey: .preferences)
         try container.encodeIfPresent(self.favoriteMovie, forKey: .favoriteMovie)
+        try container.encodeIfPresent(self.profileImagePath, forKey: .profileImagePath)
+        try container.encodeIfPresent(self.profileImageUrl, forKey: .profileImageUrl)
     }
     
     // OLD CODE
@@ -147,6 +159,15 @@ final class UserManager {
     func updateUserPremiumStatus(userId: String, isPremium: Bool) async throws {
         let data: [AnyHashable:Any] = [
             databaseUser.CodingKeys.isPremium.rawValue : isPremium
+        ]
+        
+        try await userDocument(userId: userId).updateData(data)
+    }
+    
+    func updateUserProfileImagePath(userId: String, path: String?, url: String?) async throws {
+        let data: [AnyHashable:Any] = [
+            databaseUser.CodingKeys.profileImagePath.rawValue : path as Any,
+            databaseUser.CodingKeys.profileImageUrl.rawValue : url as Any
         ]
         
         try await userDocument(userId: userId).updateData(data)
