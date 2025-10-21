@@ -11,6 +11,8 @@
 		9976C4732EA4798900EE8B0F /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 9976C4722EA4798900EE8B0F /* FirebaseStorage */; };
 		9976C47A2EA6C63D00EE8B0F /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 9976C4792EA6C63D00EE8B0F /* FirebaseCrashlytics */; };
 		9976C4802EA6FAE100EE8B0F /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = 9976C47F2EA6FAE100EE8B0F /* FirebasePerformance */; };
+		9976C4892EA7157200EE8B0F /* FirebaseAnalyticsCore in Frameworks */ = {isa = PBXBuildFile; productRef = 9976C4882EA7157200EE8B0F /* FirebaseAnalyticsCore */; };
+		9976C48B2EA715A800EE8B0F /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9976C48A2EA715A800EE8B0F /* AdSupport.framework */; };
 		999B3C642E83A3BA0014FA88 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 999B3C632E83A3BA0014FA88 /* GoogleSignIn */; };
 		999B3C662E83A3BA0014FA88 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 999B3C652E83A3BA0014FA88 /* GoogleSignInSwift */; };
 		99C16F8D2E7FAA2300D75198 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 99C16F8C2E7FAA2300D75198 /* FirebaseAnalytics */; };
@@ -18,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9976C48A2EA715A800EE8B0F /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		99C16F7B2E7FA68A00D75198 /* SwiftfulFirebase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftfulFirebase.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -48,9 +51,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				99C16F8D2E7FAA2300D75198 /* FirebaseAnalytics in Frameworks */,
+				9976C48B2EA715A800EE8B0F /* AdSupport.framework in Frameworks */,
 				99C16F902E7FB22100D75198 /* FirebaseAuth in Frameworks */,
 				999B3C642E83A3BA0014FA88 /* GoogleSignIn in Frameworks */,
 				9976C47A2EA6C63D00EE8B0F /* FirebaseCrashlytics in Frameworks */,
+				9976C4892EA7157200EE8B0F /* FirebaseAnalyticsCore in Frameworks */,
 				9976C4362E97084000EE8B0F /* FirebaseFirestore in Frameworks */,
 				999B3C662E83A3BA0014FA88 /* GoogleSignInSwift in Frameworks */,
 				9976C4802EA6FAE100EE8B0F /* FirebasePerformance in Frameworks */,
@@ -81,6 +86,7 @@
 		99C16F8E2E7FB22100D75198 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9976C48A2EA715A800EE8B0F /* AdSupport.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -114,6 +120,7 @@
 				9976C4722EA4798900EE8B0F /* FirebaseStorage */,
 				9976C4792EA6C63D00EE8B0F /* FirebaseCrashlytics */,
 				9976C47F2EA6FAE100EE8B0F /* FirebasePerformance */,
+				9976C4882EA7157200EE8B0F /* FirebaseAnalyticsCore */,
 			);
 			productName = SwiftfulFirebase;
 			productReference = 99C16F7B2E7FA68A00D75198 /* SwiftfulFirebase.app */;
@@ -453,6 +460,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 99C16F8B2E7FAA2300D75198 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebasePerformance;
+		};
+		9976C4882EA7157200EE8B0F /* FirebaseAnalyticsCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 99C16F8B2E7FAA2300D75198 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsCore;
 		};
 		999B3C632E83A3BA0014FA88 /* GoogleSignIn */ = {
 			isa = XCSwiftPackageProductDependency;
