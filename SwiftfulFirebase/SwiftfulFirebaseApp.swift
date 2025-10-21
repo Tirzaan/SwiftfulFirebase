@@ -15,7 +15,7 @@ struct SwiftfulFirebaseApp: App {
     
     var body: some Scene {
         WindowGroup {
-            CrashView()
+            PreformanceView()
         }
     }
 }
